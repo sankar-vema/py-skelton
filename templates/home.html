@@ -1,9 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_public.html" %}
 
 {% block content %}
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
-    <h1>Demo App</h1>
+    <h1>Welcome</h1>
     <p>Django REST AUTH</p>
+    <a href="{% url 'login' %}">Login</a>
   </div>
 {% endblock %}

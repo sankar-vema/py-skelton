@@ -1,38 +1,92 @@
-<!-- Signup form -->
-<form class="form-horizontal ajax-post" id="signup" role="form" action="{% url 'rest_register' %}">
-  <div class="form-group">
-    <label for="email" class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-10">
-      <input name="email" type="text" class="form-control" id="email" placeholder="Email">
-    </div>
-  </div>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'css/formElements.css' %}{% endblock %}" />
+<link rel="stylesheet" type="text/css" href="{% block stylesheet1 %}{% static 'css/loginStyles.css' %}{% endblock %}"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      var error_response = function(data){
+        $('.api-response').html("API Response: " + data.status + ' ' + data.statusText + '<br/>Content: ' + data.responseText);
+      }
+      var susccess_response = function(data){
+        $('.api-response').html("API Response: OK<br/>Content: " + JSON.stringify(data));
+      }
 
-  <div class="form-group">
-    <label for="username" class="col-sm-2 control-label">Username</label>
-    <div class="col-sm-10">
-      <input name="username" type="text" class="form-control" id="username" placeholder="Username">
-    </div>
-  </div>
+      $().ready(function(){
+        $('form.ajax-post button[type=submit]').click(function(){
+          var form = $('form.ajax-post');
+          $.post(form.attr('action'), form.serialize())
+          .fail(function(data){error_response(data);})
+          .done(function(data){susccess_response(data);});
+          return false;
+        });
+      });
+    </script>
+    {% block script %}{% endblock %}
 
-  <div class="form-group">
-    <label for="password1" class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-10">
-      <input name="password1" type="password" class="form-control" id="password1" placeholder="Password">
-    </div>
-  </div>
+<!-- Top content -->
+<div class="top-content">
 
-  <div class="form-group">
-    <label for="password2" class="col-sm-2 control-label">Repeat password</label>
-    <div class="col-sm-10">
-      <input name="password2" type="password" class="form-control" id="password2" placeholder="Repeat password">
-    </div>
-  </div>
+    <div class="inner-bg">
+        <div class="container">
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Sign up</button>
-    </div>
-  </div>
+            <div class="row">
+            	<div class="col-sm-6 book">
+            		<img src="assets/img/side-banner.png" alt="">
+            	</div>
+                <div class="col-sm-5 form-box">
+                	<div class="form-top">
+                		<div class="form-top-left">
+                			<h3>Get access to Ideation!</h3>
+                    		<p>Fill in registration details:</p>
+                		</div>
+                		<div class="form-top-right">
+                			<i class="fa fa-pencil"></i>
+                		</div>
+                    </div>
+                    <div class="form-bottom">
+	                    <!-- Signup form -->
+                        <form class="form-horizontal ajax-post" id="signup" role="form" action="{% url 'rest_register' %}">
+                          <div class="form-group">
 
-  <div class="form-group api-response"></div>
-</form>
+                            <div class="col-sm-12">
+                              <input name="email" type="text" class="form-control" id="email" placeholder="Email">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <input name="password1" type="password" class="form-control" id="password1" placeholder="Password">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                             <input name="password2" type="password" class="form-control" id="password2" placeholder="Repeat password">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <button type="submit" class="btn btn-default">Sign up</button>
+                            </div>
+                          </div>
+
+                          <div class="form-group api-response"></div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
