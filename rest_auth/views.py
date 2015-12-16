@@ -1,7 +1,9 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout,authenticate
+from django.shortcuts import render,render_to_response,HttpResponse,HttpResponseRedirect
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-
+import logging
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -16,9 +18,9 @@ from .app_settings import (
     PasswordChangeSerializer
 )
 
+logger = logging.getLogger(__name__)
 
 class LoginView(GenericAPIView):
-
     """
     Check the credentials and return the REST Token
     if the credentials are valid and authenticated.
@@ -32,6 +34,7 @@ class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
     token_model = Token
     response_serializer = TokenSerializer
+
 
     def login(self):
         self.user = self.serializer.validated_data['user']

@@ -1,9 +1,14 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="home.html"), name='home'),
+
+    url(r'^index/$',TemplateView.as_view(template_name="index.html"),
+        name='index'),
+
     url(r'^signup/$', TemplateView.as_view(template_name="signup.html"),
         name='signup'),
     url(r'^email-verification/$',

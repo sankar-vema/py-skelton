@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Django-rest-auth demo">
+    <meta name="author" content="Tivix, Inc.">
+
+    <title>Django Rest App</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <!-- Optional theme -->
+
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'css/main.css' %}{% endblock %}" />
+     <link rel="stylesheet" type="text/css" href="{% block stylesheet1 %}{% static 'css/menu.css' %}{% endblock %}" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+<body role="document">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+
+      <!-- activity menu being -->
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="#/dashboard">Dashboard</a></li>
+        <li><a href="#/campaign/list">Campaigns</a></li>
+        <li><a href="#/campaign/add"><i class="fa fa-plus"></i></a></li>
+        <li><a href="#/ideas">Ideas</a></li>
+        <li><a href="#/ideas/add"><i class="fa fa-plus"></i></a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+
+          <ul class="dropdown-menu">
+            <li><a href="#/admin/groups">Groups</a></li>
+            <li><a href="#/admin/users">Users</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Customize</li>
+            <li><a href="#/customize/idea">Idea Templates</a></li>
+            <li><a href="#/customize/workflow">Workflow</a></li>
+          </ul>
+        </li>
+    </ul>
+    <!-- activity menu end -->
+
+    <!-- right menu begin -->
+
+  <ul class="nav navbar-nav navbar-right">
+      <li class="active"><a href="#/">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#faqs">FAQs</a></li>
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-bell-o"></i><span class="badge">15</span><span class="caret"></span>
+        </a>
+       <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li class="dropdown-header">Nav header</li>
+          <li><a href="#">Separated link</a></li>
+          <li><a href="#">One more separated link</a></li>
+       </ul>
+    </li>
+
+    <li class="user dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-user"></i>
+        <!--<img class="avatar" src="/app/assets/img/avatar.jpg" />-->
+        Profile<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="dropdown-header">
+            Sankar Vema
+          </li>
+          <li class="divider"></li>
+          <li class="link">
+            <a href="#">
+              Profile
+            </a>
+          </li>
+          <li class="link">
+            <a href="#">
+              Change Password
+            </a>
+          </li>
+          <li class="link">
+            <a href="#">
+              Preferences
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li class="link">
+            <a href="/">
+              Logout
+            </a>
+          </li>
+        </ul>
+    </li>
+<!--
+    <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">API endpoints <span class="caret"></span></a>
+
+            <ul class="dropdown-menu" role="menu">
+                <!-- these pages don't require user token
+                <li><a href="{% url 'signup' %}">Signup</a></li>
+                <!--<li><a href="{% url 'email-verification' %}">E-mail verification</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <!--<li><a href="{% url 'password-reset' %}">Password Reset</a></li>
+                <li><a href="{% url 'password-reset-confirm' %}">Password Reset Confirm</a></li>
+                <li class="divider"></li>
+                <!-- these pages require user token
+                <li><a href="{% url 'user-details' %}">User details</a></li>
+                <li><a href="{% url 'password-change' %}">Password change</a></li>
+            </ul>
+    </li>
+-->
+  </ul>
+
+        <div class="navbar-header">
+
+        </div>
+        <div class="collapse navbar-collapse">
+
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+<!-- right menu end-->
+
+    <div class="container theme-showcase" role="main">
+      {% block content %}{% endblock %}
+    </div>
+ <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation"  style="background-color: #ecf2f9;">
+    <div class="container">
+        <div class="navbar-text pull-left">
+           © 2015 - All rights reserverd. Tool built and managed by CSC, India Team
+        </div>
+    </div>
+  </div>
+  </body>
+</html>
