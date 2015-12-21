@@ -8,7 +8,7 @@
         $('.api-response').html("API Response: " + data.status + ' ' + data.statusText + '<br/>Content: ' + data.responseText);
       }
       var susccess_response = function(data){
-        $('.api-response').html("API Response: OK<br/>Content: " + JSON.stringify(data));
+        $('.api-response').html("Thank you for registering with us.Please verify your email by clicking on confirmation link");
       }
 
       $().ready(function(){
@@ -46,6 +46,7 @@
                     <div class="form-bottom">
 	                    <!-- Signup form -->
                         <form class="form-horizontal ajax-post" id="signup" role="form" action="{% url 'rest_register' %}">
+                          {% csrf_token %}
                           <div class="form-group">
 
                             <div class="col-sm-12">

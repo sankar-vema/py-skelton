@@ -59,6 +59,7 @@
                     <div class="form-bottom">
                        <!-- Signup form -->
                         <form class="form-horizontal ajax-post" method="post" role="form" action="{% url 'rest_login' %}">
+                            {% csrf_token %}
                              <div class="form-group">
                                 <div class="col-sm-12">
                                     <input name="username" type="text" class="form-control" id="username" placeholder="Username">
@@ -80,9 +81,8 @@
                              <div class="form-group api-response"></div>
                         </form>
 
-
                         <div>
-                            <a href="{% url 'signup' %}">Register</a> | <a href="#forgotPassword">Forgot Password</a>
+                            <a href="{% url 'signup' %}">Register</a> | <a href="{% url 'password-reset' %}">Forgot Password</a>
                         </div>
 
                     </div>

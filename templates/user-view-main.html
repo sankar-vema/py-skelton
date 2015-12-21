@@ -1,0 +1,112 @@
+{% extends "base_secure.html" %}
+
+{% block content %}
+<script>
+function toggle() {
+ if( document.getElementById("hidethis").style.display=='' ){
+   document.getElementById("hidethis").style.display = 'none';
+ }else{
+   document.getElementById("hidethis").style.display = '';
+ }
+}
+</script>
+<div class="container">
+
+<div class="page-header">
+  User Management
+  <div class="sub-header">Manage application users
+  </div>
+</div>
+
+<div class="form-inline has-feedback filter-header">
+    <input type="text" class="form-control" placeholder="Search" ng-model="search.$" />
+    <!-- <i class="glyphicon glyphicon-search form-control-feedback"></i> -->
+    <button class="btn btn-default btn-sm" ng-click="hideFilter=!hideFilter">Advanced Search</button>
+    <button class="btn btn-default btn-sm " style="margin-left:14.1cm" onClick="toggle();"> Add New User</button>
+        <li class="dropdown btn btn-default btn-sm pull-right">
+        <a href="" class="dropdown-toggle" style="color: #000000;text-decoration: none;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        Import User from CSV<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <form class="pull-right" action="{% url 'handlecsv' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <span class="pull-left">
+                    <input type="file"  class="btn btn-sm" name="csv_file" />
+                    <input type="submit" class="btn btn-default btn-sm" value="Upload" style="margin-left:15px" />
+                </span>
+            </form>
+          </li>
+        </ul>
+    </li>
+</div>
+
+<!-- <div class="filter-header">
+  <span class = "input-group input-group-sm">
+     <span class = "input-group-addon glyphicon glyphicon-search">Search </span>
+     <input type = "text" class ="" ng-model="search.$">
+     <button class="btn btn-default btn-sm" ng-click="hideFilter=!hideFilter">Advanced Search</button>
+  </span>
+
+Search
+    <input type="text" ng-model="search.$">
+    <a class="btn glyphicon glyphicon-search" ng-click="hideFilter=!hideFilter"></a>
+  
+</div> -->
+
+<table class="table table-striped table-condensed table-responsive table-hover">
+  <thead class="data-grid-header">
+    <!-- table header -->
+    <tr>
+      <th>
+        <a href="" ng-click="orderByField='handle'; reverseSort = !reverseSort">ShortId</a>
+      </th>
+      <th>
+        <a href="" ng-click="orderByField='firstName'; reverseSort = !reverseSort">First Name</a>
+      </th>
+      <th>
+        <a href="" ng-click="orderByField='lastName'; reverseSort = !reverseSort">Last Name</a>
+      </th>
+      <th class="hidden-xs">
+        <a href="" ng-click="orderByField='contactNo'; reverseSort = !reverseSort">Contact No</a>
+      </th>
+      <th>&nbsp;</th>
+    </tr>
+
+   <!-- table add new record template -->
+    <tr id="hidethis" style="display:none;">
+     <form method="post" id="userdataform" action="{% url 'saveuser' %}"enctype="multipart/form-data">
+      {% csrf_token %}
+      <td><span><input type="text" name="username"></span></td>
+      <td><span><input type="text" name="firstname"></span></td>
+      <td><span><input type="text" name="lastname"></span></td>
+      <td  class="hidden-xs"><span><input type="text"></span></td>
+      <td>
+        <span ng-hide="hideAddRow">
+          <a class="table-btn" onclick="document.getElementById('userdataform').submit()"><span class="glyphicon glyphicon-ok"/></a>
+          <a class="table-btn" onClick="toggle();"><span class="glyphicon glyphicon-remove"/></a>
+        </span>
+      </td>
+     </form>
+    </tr>
+  </thead>
+
+
+  <tbody class="data-grid-data">
+    {% for user in userlist %}
+    <tr>
+      <td>{{user.username}}</td>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td class="hidden-xs">{{user.contactNo}}</td>
+      <td>
+        <a class="table-btn" ng-click="edit(user._id)"><span class="glyphicon glyphicon-edit" /></a>
+        <a class="table-btn" ng-click="remove(user._id)"><span class="glyphicon glyphicon-trash" /></a>
+        <a class="table-btn" ng-click="lock(user._id)"><span class="glyphicon glyphicon-lock" /></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div> <!-- end of container -->
+{% endblock %}
