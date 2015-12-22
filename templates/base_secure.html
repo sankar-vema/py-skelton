@@ -43,7 +43,7 @@
 
           <ul class="dropdown-menu">
             <li><a href="#/admin/groups">Groups</a></li>
-            <li><a href="#/admin/users">Users</a></li>
+            <li><a href="/adminuserdetails/">Users</a></li>
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Customize</li>
@@ -51,6 +51,7 @@
             <li><a href="#/customize/workflow">Workflow</a></li>
           </ul>
         </li>
+
     </ul>
     <!-- activity menu end -->
 
@@ -105,7 +106,7 @@
           </li>
           <li class="divider"></li>
           <li class="link">
-            <a href="/">
+            <a href="{% url 'logout' %}">
               Logout
             </a>
           </li>

@@ -104,7 +104,7 @@ class PasswordResetSerializer(serializers.Serializer):
     """
     Serializer for requesting a password reset e-mail.
     """
-
+    username = serializers.CharField()
     email = serializers.EmailField()
 
     password_reset_form_class = PasswordResetForm

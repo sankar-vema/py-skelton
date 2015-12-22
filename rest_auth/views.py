@@ -3,7 +3,8 @@ from django.shortcuts import render,render_to_response,HttpResponse,HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-import logging
+from django.contrib.auth.models import Permission, User
+import logging,csv
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -157,3 +158,25 @@ class PasswordChangeView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"success": "New password has been saved."})
+
+
+def handlecsv(request):
+    if request.POST and request.FILES:
+         csvfile = request.FILES['csv_file']
+
+         print csvfile
+         reader = [row for row in csv.reader(csvfile.read().splitlines())]
+
+         header=reader[0]
+         if len(reader) > 0:
+          header=reader[0]
+          reader=reader[1:]
+          print header[1],'jkjk'
+          if 'username' and 'firstname' in header:
+           for row in reader:
+            print header.index('username')
+            user=User.objects.update_or_create(username=row[header.index('username')],first_name=row[header.index('firstname')],last_name=row[header.index('lastname')],email=row[header.index('email')],password=row[header.index('password')])
+         else:
+             print 'Canm here'
+
+    return HttpResponseRedirect('/adminuserdetails/')

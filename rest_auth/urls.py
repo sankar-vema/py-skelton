@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from rest_auth import views
 
 from rest_auth.views import (
     LoginView, LogoutView, UserDetailsView, PasswordChangeView,
@@ -18,4 +19,5 @@ urlpatterns = patterns(
     url(r'^user/$', UserDetailsView.as_view(), name='rest_user_details'),
     url(r'^password/change/$', PasswordChangeView.as_view(),
         name='rest_password_change'),
+    url(r'^handlecsv/$',views.handlecsv,name='handlecsv'),
 )
