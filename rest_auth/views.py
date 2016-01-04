@@ -12,6 +12,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import RetrieveUpdateAPIView
+from axes.decorators import watch_login
 
 from .app_settings import (
     TokenSerializer, UserDetailsSerializer, LoginSerializer,
@@ -36,9 +37,9 @@ class LoginView(GenericAPIView):
     token_model = Token
     response_serializer = TokenSerializer
 
-
     def login(self):
         self.user = self.serializer.validated_data['user']
+        print self.user
         self.token, created = self.token_model.objects.get_or_create(
             user=self.user)
         if getattr(settings, 'REST_SESSION_LOGIN', True):

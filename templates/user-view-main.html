@@ -10,6 +10,16 @@ function toggle() {
  }
 }
 </script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#usertable').DataTable();
+} );
+</script>
 <div class="container">
 
 <div class="page-header">
@@ -22,22 +32,27 @@ function toggle() {
     <input type="text" class="form-control" placeholder="Search" ng-model="search.$" />
     <!-- <i class="glyphicon glyphicon-search form-control-feedback"></i> -->
     <button class="btn btn-default btn-sm" ng-click="hideFilter=!hideFilter">Advanced Search</button>
-    <button class="btn btn-default btn-sm " style="margin-left:14.1cm" onClick="toggle();"> Add New User</button>
-        <li class="dropdown btn btn-default btn-sm pull-right">
-        <a href="" class="dropdown-toggle" style="color: #000000;text-decoration: none;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-        Import User from CSV<span class="caret"></span>
+    <button class="btn btn-default btn-sm " style="margin-left:15.6cm" onClick="toggle();"> Add New User</button>
+        <button class="btn btn-default btn-sm ">
+        <a href="" class="dropdown-toggle" style="color:#404040;text-decoration: none;" data-toggle="dropdown" role="button" aria-haspopup="true">
+        Bulk Import<span class="caret"></span>
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu pull-right">
           <li>
             <form class="pull-right" action="{% url 'handlecsv' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <span class="pull-left">
-                    <input type="file"  class="btn btn-sm" name="csv_file" />
+                <span class="pull-right">
+                    <li class="dropdown-header">
+                    <b>Fileformats: .csv,.xls </br> Maximum Records Limit:500</b>
+                    </li>
+                    <li class="divider"></li>
+                    <input type="file"  class="btn btn-sm" name="csv_file"/>
                     <input type="submit" class="btn btn-default btn-sm" value="Upload" style="margin-left:15px" />
+                    <a href="/adminuserdetails/" class="btn btn-default btn-sm">Cancel</a>
                 </span>
             </form>
           </li>
         </ul>
-    </li>
+    </button>
 </div>
 
 <!-- <div class="filter-header">
@@ -53,33 +68,36 @@ Search
   
 </div> -->
 
-<table class="table table-striped table-condensed table-responsive table-hover">
+<table id="usertable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
   <thead class="data-grid-header">
     <!-- table header -->
     <tr>
       <th>
-        <a href="" ng-click="orderByField='handle'; reverseSort = !reverseSort">ShortId</a>
+        <a href="">ShortId</a>
       </th>
       <th>
-        <a href="" ng-click="orderByField='firstName'; reverseSort = !reverseSort">First Name</a>
+        <a href="">First Name</a>
       </th>
       <th>
-        <a href="" ng-click="orderByField='lastName'; reverseSort = !reverseSort">Last Name</a>
+        <a href="">Last Name</a>
       </th>
       <th class="hidden-xs">
-        <a href="" ng-click="orderByField='contactNo'; reverseSort = !reverseSort">Contact No</a>
+        <a href="">Email</a>
       </th>
       <th>&nbsp;</th>
     </tr>
 
    <!-- table add new record template -->
-    <tr id="hidethis" style="display:none;">
-     <form method="post" id="userdataform" action="{% url 'saveuser' %}"enctype="multipart/form-data">
+    <!---->
+</thead>
+  <tbody class="data-grid-data">
+  <tr id="hidethis" style="display:none;">
+     <form method="post" id="userdataform" action="{% url 'saveuser' %}" enctype="multipart/form-data">
       {% csrf_token %}
       <td><span><input type="text" name="username"></span></td>
       <td><span><input type="text" name="firstname"></span></td>
       <td><span><input type="text" name="lastname"></span></td>
-      <td  class="hidden-xs"><span><input type="text"></span></td>
+      <td><span><input type="text" name="email"></span></td>
       <td>
         <span ng-hide="hideAddRow">
           <a class="table-btn" onclick="document.getElementById('userdataform').submit()"><span class="glyphicon glyphicon-ok"/></a>
@@ -88,20 +106,22 @@ Search
       </td>
      </form>
     </tr>
-  </thead>
 
 
-  <tbody class="data-grid-data">
     {% for user in userlist %}
     <tr>
       <td>{{user.username}}</td>
       <td>{{user.first_name}}</td>
       <td>{{user.last_name}}</td>
-      <td class="hidden-xs">{{user.contactNo}}</td>
+      <td class="hidden-xs">{{user.email}}</td>
       <td>
-        <a class="table-btn" ng-click="edit(user._id)"><span class="glyphicon glyphicon-edit" /></a>
-        <a class="table-btn" ng-click="remove(user._id)"><span class="glyphicon glyphicon-trash" /></a>
-        <a class="table-btn" ng-click="lock(user._id)"><span class="glyphicon glyphicon-lock" /></a>
+        <a class="table-btn" ><span class="glyphicon glyphicon-edit" /></a>
+        <a href="/deactivateuser/?username={{user.username}}" class="table-btn" ><span class="glyphicon glyphicon-trash" /></a>
+        {% if user.is_active == True %}
+        <a href="/lockuser/?username={{user.username}}" class="table-btn"><span class="glyphicon glyphicon-lock" /></a>
+        {% else %}
+        <a href="/unlockuser/?username={{user.username}}" class="table-btn"><span class="glyphicon glyphicon-briefcase" /></a>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
