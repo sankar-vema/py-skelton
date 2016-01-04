@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.decorators import login_required
 from pyskeleton import views
+from axes.decorators import watch_login
+from allauth.account.views import login
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="home.html"), name='home'),
@@ -18,6 +20,9 @@ urlpatterns = patterns('',
     url(r'^login/$', TemplateView.as_view(template_name="login.html"),
         name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^lockuser/$',views.lockuser,name='lockuser'),
+    url(r'^unlockuser/$',views.unlockuser,name='unlockuser'),
+    url(r'^deactivateuser/$',views.deactivateuser,name='deactivateuser'),
     url(r'^password-reset/$',
         TemplateView.as_view(template_name="password_reset.html"),
         name='password-reset'),
@@ -40,6 +45,7 @@ urlpatterns = patterns('',
 
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^accounts/login/$', watch_login(login)),
     url(r'^account/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
