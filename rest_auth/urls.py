@@ -7,8 +7,7 @@ from rest_auth.views import (
     PasswordResetView, PasswordResetConfirmView
 )
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     # URLs that do not require a session or valid token
     url(r'^password/reset/$', PasswordResetView.as_view(),
         name='rest_password_reset'),
@@ -21,4 +20,4 @@ urlpatterns = patterns(
     url(r'^password/change/$', PasswordChangeView.as_view(),
         name='rest_password_change'),
     url(r'^handlecsv/$',views.handlecsv,name='handlecsv'),
-)
+]

@@ -15,7 +15,7 @@ UserModel = get_user_model()
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=False, allow_blank=True)
+    username = serializers.CharField(required=True, allow_blank=False)
     email = serializers.EmailField(required=False, allow_blank=True)
     password = serializers.CharField(style={'input_type': 'password'})
 
@@ -109,6 +109,17 @@ class PasswordResetSerializer(serializers.Serializer):
 
     password_reset_form_class = PasswordResetForm
 
+    def validate_username(self,value):
+        # Create PasswordResetForm with the serializer
+        self.reset_form = self.password_reset_form_class(data=self.initial_data)
+        if not self.reset_form.is_valid():
+            raise serializers.ValidationError(_('Error'))
+
+        if not UserModel.objects.filter(username__iexact=value).exists():
+            raise serializers.ValidationError(_('Invalid username'))
+
+        return value
+
     def validate_email(self, value):
         # Create PasswordResetForm with the serializer
         self.reset_form = self.password_reset_form_class(data=self.initial_data)
@@ -136,8 +147,8 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
     Serializer for requesting a password reset e-mail.
     """
 
-    new_password1 = serializers.CharField(max_length=128)
-    new_password2 = serializers.CharField(max_length=128)
+    new_password1 = serializers.CharField(max_length=128,min_length=6)
+    new_password2 = serializers.CharField(max_length=128,min_length=6)
 
     uid = serializers.CharField(required=True)
     token = serializers.CharField(required=True)

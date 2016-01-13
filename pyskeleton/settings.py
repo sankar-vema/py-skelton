@@ -28,18 +28,18 @@ SECRET_KEY = '=6$j^wg1v(+ksr!5=im7tdlq%se1^c%%on_$_(-(6tvxr&q87u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    "django.core.context_processors.request",
+#TEMPLATE_CONTEXT_PROCESSORS = (
+ #   'django.contrib.auth.context_processors.auth',
+  #  "django.core.context_processors.request",
 
     # Disabling due to alluth>=0.21.0 changes
     # "allauth.account.context_processors.account",
     # "allauth.socialaccount.context_processors.socialaccount",
-)
+#)
 
 # Application definition
 
@@ -88,10 +88,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'pyskeleton.wsgi.application'
 
@@ -136,7 +136,7 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+#TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 REST_SESSION_LOGIN = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

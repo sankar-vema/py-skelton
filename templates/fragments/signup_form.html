@@ -2,20 +2,36 @@
 <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'css/formElements.css' %}{% endblock %}" />
 <link rel="stylesheet" type="text/css" href="{% block stylesheet1 %}{% static 'css/loginStyles.css' %}{% endblock %}"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
     <script type="text/javascript">
       var error_response = function(data){
-        $('.api-response').html("API Response: " + data.status + ' ' + data.statusText + '<br/>Content: ' + data.responseText);
+        eval("var response = ("+data.responseText+")");
+        alert(response.email);
+        $('.api-response').html(response.email);
+      }
+      var error_response1 = function(data){
+        eval("var response = ("+data.responseText+")");
+        $('.api-response1').html(response.username);
+      }
+      var error_response2 = function(data){
+        eval("var response = ("+data.responseText+")");
+        $('.api-response2').html(response.password1);
+      }
+      var error_response3 = function(data){
+        eval("var response = ("+data.responseText+")");
+        $('.api-response3').html(response.password2);
+        $('.api-response3').html(response.__all__);
       }
       var susccess_response = function(data){
-        $('.api-response').html("Thank you for registering with us.Please verify your email by clicking on confirmation link");
+        $('.api-response4').html("Thank you for registering with us.Please verify your email by clicking on confirmation link");
       }
 
       $().ready(function(){
         $('form.ajax-post button[type=submit]').click(function(){
           var form = $('form.ajax-post');
           $.post(form.attr('action'), form.serialize())
-          .fail(function(data){error_response(data);})
+          .fail(function(data){error_response(data),error_response1(data),error_response2(data),error_response3(data);})
           .done(function(data){susccess_response(data);});
           return false;
         });
@@ -54,11 +70,15 @@
                             </div>
                           </div>
 
+                          <div class="form-group api-response" ></div>
+
                           <div class="form-group">
                             <div class="col-sm-12">
                               <input name="username" type="text" class="form-control" id="username" placeholder="Username">
                             </div>
                           </div>
+
+                          <div class="form-group api-response1"></div>
 
                           <div class="form-group">
                             <div class="col-sm-12">
@@ -66,19 +86,22 @@
                             </div>
                           </div>
 
+                          <div class="form-group api-response2"></div>
+
                           <div class="form-group">
                             <div class="col-sm-12">
                              <input name="password2" type="password" class="form-control" id="password2" placeholder="Repeat password">
                             </div>
                           </div>
 
+                          <div class="form-group api-response3"></div>
+
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <button type="submit" class="btn btn-default">Sign up</button>
+                              <button type="submit" class="btn btn-default">Sign Up</button>
                             </div>
                           </div>
-
-                          <div class="form-group api-response"></div>
+                          <div class="form-group api-response4"></div>
                         </form>
 
                     </div>
@@ -86,7 +109,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 

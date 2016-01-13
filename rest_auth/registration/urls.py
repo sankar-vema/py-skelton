@@ -3,8 +3,7 @@ from django.conf.urls import patterns, url
 
 from .views import RegisterView, VerifyEmailView
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', RegisterView.as_view(), name='rest_register'),
     url(r'^verify-email/$', VerifyEmailView.as_view(), name='rest_verify_email'),
 
@@ -21,4 +20,4 @@ urlpatterns = patterns(
     # djang-allauth https://github.com/pennersr/django-allauth/blob/master/allauth/account/views.py#L190
     url(r'^account-confirm-email/(?P<key>\w+)/$', TemplateView.as_view(),
         name='account_confirm_email'),
-)
+]

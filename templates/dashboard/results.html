@@ -1,0 +1,27 @@
+{% if results|length %}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+
+	<table id="usertable" class="table" cellspacing="0" width="100%">
+        <thead class="data-grid-header">
+        </thead>
+    	<tr class='even'>
+		    <td colspan="3" class="right">
+		    <strong>Found {{ results|length }} users</strong>
+		    </td>
+	    </tr>
+	    {% for user in results %}
+    	<tr class="{% cycle 'odd' 'even' %}">
+	    	<td><input type="submit" style="margin-right:5px; border:none;background-color: transparent;" name="checks" id={{user.username}} value={{user.username}} /></td>
+	    </tr>
+	    {% endfor %}
+	</table>
+
+{% else %}
+	<div class="note">
+	Your search yielded no results
+	</div>
+{% endif %}
