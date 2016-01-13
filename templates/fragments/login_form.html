@@ -10,8 +10,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript">
       var error_response = function(data){
-        $('.api-response').html(data.responseText);
+        eval("var response = ("+data.responseText+")");
+        $('.api-response').html(response.non_field_errors);
       }
+      var error_response1 = function(data){
+        eval("var response = ("+data.responseText+")");
+        $('.api-response1').html(response.password);
+      }
+
+      var error_response2 = function(data){
+        eval("var response = ("+data.responseText+")");
+        $('.api-response2').html(response.username);
+      }
+
       var susccess_response = function(data){
         window.location.href="/index";
       }
@@ -21,6 +32,8 @@
           var form = $('form.ajax-post');
           $.post(form.attr('action'), form.serialize())
           .fail(function(data){error_response(data);})
+          .fail(function(data){error_response1(data);})
+          .fail(function(data){error_response2(data);})
           .done(function(data){susccess_response(data);});
           return false;
         });
@@ -64,11 +77,15 @@
                                 </div>
                              </div>
 
+                             <div class="form-group api-response2"></div>
+
                              <div class="form-group">
                                 <div class="col-sm-12">
                                     <input name="password" type="password" class="form-control" id="password" placeholder="Password">
                                 </div>
                              </div>
+
+                             <div class="form-group api-response1"></div>
 
                              <div class="form-group">
                                 <div class="col-sm-12">
@@ -88,5 +105,4 @@
             </div>
         </div>
     </div>
-
 </div>

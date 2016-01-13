@@ -33,13 +33,14 @@ $(document).ready(function() {
     <!-- <i class="glyphicon glyphicon-search form-control-feedback"></i> -->
     <button class="btn btn-default btn-sm" ng-click="hideFilter=!hideFilter">Advanced Search</button>
     <button class="btn btn-default btn-sm " style="margin-left:15.6cm" onClick="toggle();"> Add New User</button>
-        <button class="btn btn-default btn-sm ">
+    <li class="dropdown btn btn-default btn-sm ">
         <a href="" class="dropdown-toggle" style="color:#404040;text-decoration: none;" data-toggle="dropdown" role="button" aria-haspopup="true">
         Bulk Import<span class="caret"></span>
         </a>
         <ul class="dropdown-menu pull-right">
           <li>
-            <form class="pull-right" action="{% url 'handlecsv' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form class="pull-right" action="{% url 'handlecsv' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <span class="pull-right">
                     <li class="dropdown-header">
                     <b>Fileformats: .csv,.xls </br> Maximum Records Limit:500</b>
@@ -52,7 +53,7 @@ $(document).ready(function() {
             </form>
           </li>
         </ul>
-    </button>
+    </li>
 </div>
 
 <!-- <div class="filter-header">
@@ -84,12 +85,11 @@ Search
       <th class="hidden-xs">
         <a href="">Email</a>
       </th>
-      <th>&nbsp;</th>
+      <th data-orderable="false">&nbsp;</th>
     </tr>
-
-   <!-- table add new record template -->
+    <!-- table add new record template -->
     <!---->
-</thead>
+  </thead>
   <tbody class="data-grid-data">
   <tr id="hidethis" style="display:none;">
      <form method="post" id="userdataform" action="{% url 'saveuser' %}" enctype="multipart/form-data">
@@ -105,9 +105,7 @@ Search
         </span>
       </td>
      </form>
-    </tr>
-
-
+  </tr>
     {% for user in userlist %}
     <tr>
       <td>{{user.username}}</td>
