@@ -4,7 +4,7 @@ from axes.decorators import watch_login
 
 from rest_auth.views import (
     LoginView, LogoutView, UserDetailsView, PasswordChangeView,
-    PasswordResetView, PasswordResetConfirmView
+    PasswordResetView, PasswordResetConfirmView,LockUserView,UnlockUserView
 )
 
 urlpatterns = [
@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^password/change/$', PasswordChangeView.as_view(),
         name='rest_password_change'),
     url(r'^handlecsv/$',views.handlecsv,name='handlecsv'),
+    url(r'^rest_lock/$', LockUserView.as_view(), name='rest_lock'),
+    url(r'^rest_unlock/$', UnlockUserView.as_view(), name='rest_unlock'),
 ]
