@@ -104,21 +104,9 @@ class PasswordResetSerializer(serializers.Serializer):
     """
     Serializer for requesting a password reset e-mail.
     """
-    username = serializers.CharField()
     email = serializers.EmailField()
 
     password_reset_form_class = PasswordResetForm
-
-    def validate_username(self,value):
-        # Create PasswordResetForm with the serializer
-        self.reset_form = self.password_reset_form_class(data=self.initial_data)
-        if not self.reset_form.is_valid():
-            raise serializers.ValidationError(_('Error'))
-
-        if not UserModel.objects.filter(username__iexact=value).exists():
-            raise serializers.ValidationError(_('Invalid username'))
-
-        return value
 
     def validate_email(self, value):
         # Create PasswordResetForm with the serializer
@@ -232,3 +220,22 @@ class PasswordChangeSerializer(serializers.Serializer):
         if not self.logout_on_password_change:
             from django.contrib.auth import update_session_auth_hash
             update_session_auth_hash(self.request, self.user)
+
+
+class LockUserSerializer(serializers.ModelSerializer):
+    """
+    User model w/o password
+    """
+    class Meta:
+       model = UserModel
+       #fields=('username')
+       exclude = ('password','email','last_login','is_superuser','is_active','first_name','last_name','is_staff','date_joined','groups','user_permissions')
+
+class UnlockUserSerializer(serializers.ModelSerializer):
+    """
+    User model w/o password
+    """
+    class Meta:
+       model = UserModel
+       #fields=('username')
+       exclude = ('password','email','last_login','is_superuser','is_active','first_name','last_name','is_staff','date_joined','groups','user_permissions')

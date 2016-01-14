@@ -1,4 +1,4 @@
-from django.contrib.auth import login, logout,authenticate
+from django.contrib.auth import login, logout,authenticate,get_user_model
 from django.shortcuts import render,render_to_response,HttpResponse,HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -12,12 +12,13 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.decorators import api_view
 from axes.decorators import watch_login
 
 from .app_settings import (
     TokenSerializer, UserDetailsSerializer, LoginSerializer,
     PasswordResetSerializer, PasswordResetConfirmSerializer,
-    PasswordChangeSerializer
+    PasswordChangeSerializer,LockUserSerializer,UnlockUserSerializer
 )
 
 logger = logging.getLogger(__name__)
@@ -160,6 +161,27 @@ class PasswordChangeView(GenericAPIView):
         serializer.save()
         return Response({"success": "New password has been saved."})
 
+class LockUserView(GenericAPIView):
+    serializer_class=LockUserSerializer
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        user = User.objects.get(username=request.POST.get('username'))
+        print user
+        user.is_active=False;
+        user.save()
+        return Response({"success": "User has been locked."})
+
+class UnlockUserView(GenericAPIView):
+    serializer_class=UnlockUserSerializer
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        user = User.objects.get(username=request.POST.get('username'))
+        print user
+        user.is_active=True;
+        user.save()
+        return Response({"success": "User has been unlocked."})
 
 def handlecsv(request):
     if request.POST and request.FILES:
