@@ -239,3 +239,12 @@ class UnlockUserSerializer(serializers.ModelSerializer):
        model = UserModel
        #fields=('username')
        exclude = ('password','email','last_login','is_superuser','is_active','first_name','last_name','is_staff','date_joined','groups','user_permissions')
+
+class DeactivateUserSerializer(serializers.ModelSerializer):
+    """
+    User model w/o password
+    """
+    class Meta:
+       model = UserModel
+       #fields=('username')
+       exclude = ('password','email','last_login','is_superuser','is_active','first_name','last_name','is_staff','date_joined','groups','user_permissions')

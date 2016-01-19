@@ -8,7 +8,8 @@ from rest_auth.serializers import (
     PasswordResetConfirmSerializer as DefaultPasswordResetConfirmSerializer,
     PasswordChangeSerializer as DefaultPasswordChangeSerializer,
     LockUserSerializer as DefaultLockUserSerializer,
-    UnlockUserSerializer as DefaultUnlockUserSerializer)
+    UnlockUserSerializer as DefaultUnlockUserSerializer,
+    DeactivateUserSerializer as DefaultDeactivateUserSerializer)
 
 from .utils import import_callable
 
@@ -27,6 +28,10 @@ LockUserSerializer = import_callable(
 UnlockUserSerializer = import_callable(
    serializers.get('UnlockUserSerializer',DefaultUnlockUserSerializer)
 )
+DeactivateUserSerializer = import_callable(
+   serializers.get('DeactivateUserSerializer',DefaultDeactivateUserSerializer)
+)
+
 LoginSerializer = import_callable(
     serializers.get('LOGIN_SERIALIZER', DefaultLoginSerializer)
 )

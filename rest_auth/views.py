@@ -18,7 +18,7 @@ from axes.decorators import watch_login
 from .app_settings import (
     TokenSerializer, UserDetailsSerializer, LoginSerializer,
     PasswordResetSerializer, PasswordResetConfirmSerializer,
-    PasswordChangeSerializer,LockUserSerializer,UnlockUserSerializer
+    PasswordChangeSerializer,LockUserSerializer,UnlockUserSerializer,DeactivateUserSerializer
 )
 
 logger = logging.getLogger(__name__)
@@ -166,22 +166,36 @@ class LockUserView(GenericAPIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        user = User.objects.get(username=request.POST.get('username'))
+        user = User.objects.get(username=request.GET.get('username'))
         print user
         user.is_active=False;
         user.save()
-        return Response({"success": "User has been locked."})
+        #return Response({"success": "User has been locked."})
+        return HttpResponseRedirect('/adminuserdetails/',{"success": "User has been locked."})
 
 class UnlockUserView(GenericAPIView):
     serializer_class=UnlockUserSerializer
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        user = User.objects.get(username=request.POST.get('username'))
+        user = User.objects.get(username=request.GET.get('username'))
         print user
         user.is_active=True;
         user.save()
-        return Response({"success": "User has been unlocked."})
+        #return Response({"success": "User has been unlocked."})
+        return HttpResponseRedirect('/adminuserdetails/',{"success": "User has been unlocked."})
+
+
+class DeactivateUserView(GenericAPIView):
+    serializer_class = DeactivateUserSerializer
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        user = User.objects.get(username=request.GET.get('username'))
+        print user
+        user.delete()
+        #return Response({"success": "User has been deleted."})
+        return HttpResponseRedirect('/adminuserdetails/',{"success": "User has been deleted."})
 
 def handlecsv(request):
     if request.POST and request.FILES:
