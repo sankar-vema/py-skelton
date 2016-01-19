@@ -20,6 +20,31 @@ $(document).ready(function() {
     $('#usertable').DataTable();
 } );
 </script>
+<!--\\
+<script type="text/javascript">
+      var susccess_response = function(data){
+        window.location.href="/adminuserdetails";
+        }
+
+      $().ready(function(){
+        $('form.ajax-post button[type=submit]').click(function(){
+          var form = $('form.ajax-post');
+          $.post(form.attr('action'))
+           .done(function(data){susccess_response(data);});
+          return false;
+        });
+      });
+    </script>
+ {% block script %}{% endblock %}-->
+<style>
+  .remove_button_css {
+  outline: none;
+  padding: 0px;
+  border: 0px;
+  box-sizing: none;
+  background-color: transparent;
+}
+</style>
 <div class="container">
 
 <div class="page-header">
@@ -114,11 +139,23 @@ Search
       <td class="hidden-xs">{{user.email}}</td>
       <td>
         <a class="table-btn" ><span class="glyphicon glyphicon-edit" /></a>
-        <a href="/deactivateuser/?username={{user.username}}" class="table-btn" ><span class="glyphicon glyphicon-trash" /></a>
+        <!--<a href="/deactivateuser/?username={{user.username}}" class="table-btn" ><span class="glyphicon glyphicon-trash" /></a>-->
+        <form class="ajax-post" style="display:inline" method="post" role="form" action="{% url 'rest_deactivate' %}?username={{user.username}}">
+          {% csrf_token %}
+            <button type="submit" id="delete" class="remove_button_css table-btn"><a><span class="glyphicon glyphicon-trash" /></a></button>
+        </form>
         {% if user.is_active == True %}
-        <a href="/lockuser/?username={{user.username}}"  class="table-btn"><span class="glyphicon glyphicon-lock" /></a>
+        <form class="ajax-post" style="display:inline" method="post" role="form" action="{% url 'rest_lock' %}?username={{user.username}}">
+          {% csrf_token %}
+            <button type="submit"  class="remove_button_css table-btn"><a><span class="glyphicon glyphicon-lock" /></a></button>
+        </form>
+        <!--<a href="/lockuser/?username={{user.username}}"  class="table-btn"><span class="glyphicon glyphicon-lock" /></a>-->
         {% else %}
-        <a href="/unlockuser/?username={{user.username}}" class="table-btn"><span class="glyphicon glyphicon-briefcase" /></a>
+        <form class="ajax-post" style="display:inline" method="post" role="form" action="{% url 'rest_unlock' %}?username={{user.username}}">
+          {% csrf_token %}
+            <button type="submit" class="remove_button_css table-btn"><a><span class="fa fa-unlock" /></a></button>
+        </form>
+        <!--<a href="/unlockuser/?username={{user.username}}" class="table-btn"><span class="glyphicon glyphicon-briefcase" /></a>-->
         {% endif %}
       </td>
     </tr>
