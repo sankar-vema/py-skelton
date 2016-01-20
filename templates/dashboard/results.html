@@ -15,7 +15,9 @@
 	    </tr>
 	    {% for user in results %}
     	<tr class="{% cycle 'odd' 'even' %}">
+			<form method="post">
 	    	<td><input type="submit" style="margin-right:5px; border:none;background-color: transparent;" name="checks" id={{user.username}} value={{user.username}} /></td>
+			</form>
 	    </tr>
 	    {% endfor %}
 	</table>

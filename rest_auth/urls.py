@@ -4,7 +4,7 @@ from axes.decorators import watch_login
 
 from rest_auth.views import (
     LoginView, LogoutView, UserDetailsView, PasswordChangeView,
-    PasswordResetView, PasswordResetConfirmView,LockUserView,UnlockUserView,DeactivateUserView
+    PasswordResetView, PasswordResetConfirmView,LockUserView,UnlockUserView,DeactivateUserView,UserAPI,GroupAPI,DeactivateGroupView,UserSearchAPI
 )
 
 urlpatterns = [
@@ -22,5 +22,9 @@ urlpatterns = [
     url(r'^handlecsv/$',views.handlecsv,name='handlecsv'),
     url(r'^rest_lock/$', LockUserView.as_view(), name='rest_lock'),
     url(r'^rest_unlock/$', UnlockUserView.as_view(), name='rest_unlock'),
-    url(r'^rest_deactivate/$', DeactivateUserView.as_view(),name='rest_deactivate')
+    url(r'^rest_deactivate/$', DeactivateUserView.as_view(),name='rest_deactivate'),
+    url(r'^rest_userapi/$',UserAPI.as_view(),name='rest_userapi'),
+    url(r'^rest_groupapi/$',GroupAPI.as_view(),name='rest_groupapi'),
+    url(r'^rest_deactivategroup/$',DeactivateGroupView.as_view(),name='rest_deactivategroup'),
+    url(r'^rest_usersearchapi/$',UserSearchAPI.as_view(),name='rest_usersearchapi')
 ]

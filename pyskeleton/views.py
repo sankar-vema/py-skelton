@@ -28,7 +28,7 @@ def ajax_user_search( request ):
                 'results': results,'grouplist':grouplist
             }
             return render_to_response( template, data,
-                                       context_instance = RequestContext( request ) )
+                                       context_instance = RequestContext( request ))
 
 # Logout Functionality
 @login_required
