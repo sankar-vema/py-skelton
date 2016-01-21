@@ -28,8 +28,6 @@ SECRET_KEY = '=6$j^wg1v(+ksr!5=im7tdlq%se1^c%%on_$_(-(6tvxr&q87u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-
 ALLOWED_HOSTS = []
 
 #TEMPLATE_CONTEXT_PROCESSORS = (
@@ -95,19 +93,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pyskeleton.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
- 'default': {
- 'ENGINE': 'django.db.backends.mysql',
- 'NAME': 'restdb',
- 'USER': 'root',
- 'PASSWORD': 'root',
- 'HOST': 'localhost',   # Or an IP that your DB is hosted on
- 'PORT': '3306',
- }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'restdb',
+        'USER': 'root',
+        'PASSWORD': '0099',
+        'HOST': 'localhost',   # Or an IP that your DB is hosted on
+        'PORT': '3306',
+    }
 }
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -153,4 +150,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
-
