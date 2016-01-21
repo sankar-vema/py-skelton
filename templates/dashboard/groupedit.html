@@ -5,7 +5,7 @@
 $( document ).ready( function() {
 	$( '#searchSubmit' ).click( function() {
 		q = $( '#q' ).val();
-		$( '#results' ).html( '&nbsp;' ).load( '{% url 'demo_user_search' %}?q=' + q);
+		$( '#results' ).html( '&nbsp;' ).load( '{% url 'rest_usersearchapi' %}?q=' + q);
 	});
 });
 
@@ -74,7 +74,8 @@ $( document ).ajaxStart( function() {
 
         	<div class="margin">
                 <!--span id="spinner"><img src="{% static 'img/spinner.gif' %}"/></span>-->
-                 <form action="{% url 'addusertogroup' %}?groupname={{name}}&id={{id}}" method="post">{% csrf_token %}
+                 <form action="{% url 'rest_usersearchapi' %}?groupname={{name}}&id={{id}}" method="post">
+                {% csrf_token %}
 		        <div id="results"></div>
                 </form>
 	        </div>

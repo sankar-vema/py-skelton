@@ -117,7 +117,7 @@ Search
   </thead>
   <tbody class="data-grid-data">
   <tr id="hidethis" style="display:none;">
-     <form method="post" id="userdataform" action="{% url 'saveuser' %}" enctype="multipart/form-data">
+     <form method="post" id="userdataform" action="{% url 'rest_userapi' %}" enctype="multipart/form-data">
       {% csrf_token %}
       <td><span><input type="text" name="username"></span></td>
       <td><span><input type="text" name="firstname"></span></td>

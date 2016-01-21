@@ -110,7 +110,7 @@ Search
 </thead>
   <tbody class="data-grid-data">
   <tr id="hidethis" style="display:none;">
-     <form method="post" id="userdataform" action="{% url 'savegroup' %}" enctype="multipart/form-data">
+     <form method="post" id="userdataform" action="{% url 'rest_groupapi' %}" enctype="multipart/form-data">
       {% csrf_token %}
       <td><span><input type="text" name="groupid"></span></td>
       <td><span><input type="text" name="groupname"></span></td>
@@ -130,7 +130,11 @@ Search
       <td>{{group.name}}</td>
       <td>
         <a href="/editgroup/?groupname={{group.name}}&id={{group.id}}" class="table-btn" ><span class="glyphicon glyphicon-edit" /></a>
-        <a href="/deactivategroup/?groupname={{group.name}}" class="table-btn" ><span class="glyphicon glyphicon-trash" /></a>
+        <!--<a href="/deactivategroup/?groupname={{group.name}}" class="table-btn" ><span class="glyphicon glyphicon-trash" /></a>-->
+        <form style="display:inline" method="POST" action="{% url 'rest_deactivategroup' %}?groupname={{group.name}}">
+          {% csrf_token %}
+            <button type="submit" class="remove_button_css table-btn"><a><span class="glyphicon glyphicon-trash"/></a></button>
+        </form>
       </td>
     </tr>
     {% endfor %}
