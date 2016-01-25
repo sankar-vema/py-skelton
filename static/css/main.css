@@ -158,3 +158,10 @@ code {
   -webkit-box-shadow: 0 0 2px black;
   box-shadow: 0 0 2px black;
 }
+
+/* Custom Style for Index page and footer*/
+/* class for making disabled links */
+ul.pagination li.disabled a{
+  outline:0;
+}
+/* Custom Style for Index page and footer*/
