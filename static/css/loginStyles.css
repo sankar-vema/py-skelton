@@ -177,3 +177,16 @@ img { max-width: 100%; }
 	h1, h2 { font-size: 32px; }
 
 }
+/* Changes for User Story #14 -  enhance- Changing error style*/
+
+.form-horizontal .form-group.error {
+    width: 80%;
+    margin-left: 0px;
+    color: #de615e;
+}
+.form-horizontal .form-group.success{
+    width: 97%;
+    margin-left: 5px;
+    color: #FFF;
+}
+/* Changes for User Story #14*/

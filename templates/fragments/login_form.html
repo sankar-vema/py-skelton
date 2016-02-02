@@ -11,16 +11,16 @@
     <script type="text/javascript">
       var error_response = function(data){
         eval("var response = ("+data.responseText+")");
-        $('.api-response').html(response.non_field_errors);
+        $('#api-response').html(response.non_field_errors);
       }
       var error_response1 = function(data){
         eval("var response = ("+data.responseText+")");
-        $('.api-response1').html(response.password);
+        $('#api-response1').html(response.password);
       }
 
       var error_response2 = function(data){
         eval("var response = ("+data.responseText+")");
-        $('.api-response2').html(response.username);
+        $('#api-response2').html(response.username);
       }
 
       var susccess_response = function(data){
@@ -71,13 +71,14 @@
                        <!-- Signup form -->
                         <form class="form-horizontal ajax-post" method="post" role="form" action="{% url 'rest_login' %}">
                             {% csrf_token %}
+                            <div class="form-group error" id="api-response"></div>
                              <div class="form-group">
                                 <div class="col-sm-12">
                                     <input name="username" type="text" class="form-control" id="username" placeholder="Username">
                                 </div>
                              </div>
 
-                             <div class="form-group api-response2"></div>
+                             <div class="form-group error" id="api-response2"></div>
 
                              <div class="form-group">
                                 <div class="col-sm-12">
@@ -85,15 +86,13 @@
                                 </div>
                              </div>
 
-                             <div class="form-group api-response1"></div>
+                             <div class="form-group error" id="api-response1"></div>
 
                              <div class="form-group">
                                 <div class="col-sm-12">
                                   <button type="submit" class="btn btn-default">Login</button>
                                 </div>
-                             </div>
-
-                             <div class="form-group api-response"></div>
+                             </div>                             
                         </form>
 
                         <div>
