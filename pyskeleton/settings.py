@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'rest_auth.registration',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'django-session-idle-timeout',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,6 +71,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.FailedLoginMiddleware'
+    'django-session-idle-timeout.middleware.SessionIdleTimeout',
 )
 
 ROOT_URLCONF = 'pyskeleton.urls'
@@ -143,7 +145,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 AXES_LOGIN_FAILURE_LIMIT = 3
 AXES_USE_USER_AGENT = True
-
+SESSION_IDLE_TIMEOUT = 900
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
