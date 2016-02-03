@@ -7,31 +7,35 @@
     <script type="text/javascript">
       var error_response = function(data){
         eval("var response = ("+data.responseText+")");
-        alert(response.email);
-        $('.api-response').html(response.email);
+        $('#api-response').html(response.email);
       }
       var error_response1 = function(data){
         eval("var response = ("+data.responseText+")");
-        $('.api-response1').html(response.username);
+        $('#api-response1').html(response.username);
       }
       var error_response2 = function(data){
         eval("var response = ("+data.responseText+")");
-        $('.api-response2').html(response.password1);
+        $('#api-response2').html(response.password1);
       }
       var error_response3 = function(data){
         eval("var response = ("+data.responseText+")");
-        $('.api-response3').html(response.password2);
-        $('.api-response3').html(response.__all__);
+        $('#api-response3').html(response.password2);
+        $('#api-response3').html(response.__all__);
       }
       var susccess_response = function(data){
-        $('.api-response4').html("Thank you for registering with us.Please verify your email by clicking on confirmation link");
+        $('#api-response, #api-response1, #api-response2, #api-response3').html('');
+        $('#signup input').val('');
+        $('#api-response4').html("Thank you for registering with us.Please verify your email by clicking on confirmation link.");
       }
 
       $().ready(function(){
         $('form.ajax-post button[type=submit]').click(function(){
           var form = $('form.ajax-post');
           $.post(form.attr('action'), form.serialize())
-          .fail(function(data){error_response(data),error_response1(data),error_response2(data),error_response3(data);})
+          .fail(function(data){
+            $('#api-response4').html("");
+            error_response(data),error_response1(data),error_response2(data),error_response3(data);
+          })
           .done(function(data){susccess_response(data);});
           return false;
         });
@@ -63,14 +67,14 @@
 	                    <!-- Signup form -->
                         <form class="form-horizontal ajax-post" id="signup" role="form" action="{% url 'rest_register' %}">
                           {% csrf_token %}
+                          <div class="form-group success" id="api-response4"></div>
                           <div class="form-group">
-
                             <div class="col-sm-12">
                               <input name="email" type="text" class="form-control" id="email" placeholder="Email">
                             </div>
                           </div>
 
-                          <div class="form-group api-response" ></div>
+                          <div class="form-group error" id="api-response" ></div>
 
                           <div class="form-group">
                             <div class="col-sm-12">
@@ -78,7 +82,7 @@
                             </div>
                           </div>
 
-                          <div class="form-group api-response1"></div>
+                          <div class="form-group error" id="api-response1"></div>
 
                           <div class="form-group">
                             <div class="col-sm-12">
@@ -86,7 +90,7 @@
                             </div>
                           </div>
 
-                          <div class="form-group api-response2"></div>
+                          <div class="form-group error" id="api-response2"></div>
 
                           <div class="form-group">
                             <div class="col-sm-12">
@@ -94,14 +98,13 @@
                             </div>
                           </div>
 
-                          <div class="form-group api-response3"></div>
+                          <div class="form-group error" id="api-response3"></div>
 
                           <div class="form-group">
                             <div class="col-sm-12">
                               <button type="submit" class="btn btn-default">Sign Up</button>
                             </div>
-                          </div>
-                          <div class="form-group api-response4"></div>
+                          </div>                          
                         </form>
 
                     </div>
