@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.decorators import login_required
 from pyskeleton import views
-from axes.decorators import watch_login
+#from axes.decorators import watch_login
 from allauth.account.views import login
 
 urlpatterns = [
@@ -62,7 +62,7 @@ urlpatterns = [
 
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 
-    url(r'^accounts/login/$', watch_login(login)),
+    #url(r'^accounts/login/$', watch_login(login)),
 
     #url(r'^accounts/login/$', login),
     url(r'^account/', include('allauth.urls')),

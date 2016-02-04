@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.decorators import api_view
-from axes.decorators import watch_login
+#from axes.decorators import watch_login
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.template.context import RequestContext
 from django.db.models import Q
@@ -211,9 +211,10 @@ class DeactivateUserView(GenericAPIView):
     def post(self, request):
         user = User.objects.get(username=request.GET.get('username'))
         print user
-        user.delete()
+        user.is_active=False;
+        user.save()
         #return Response({"success": "User has been deleted."})
-        queryset = User.objects.all()
+        queryset = User.objects.filter(is_active=True)
         return Response({'userlist': queryset})
 
 class UserAPI(APIView):
