@@ -36,6 +36,7 @@ class LoginView(GenericAPIView):
     Accept the following POST parameters: username, password
     Return the REST Framework Token Object's key.
     """
+    logger.debug("Entered LoginView method in views.py in rest_auth package")
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
     token_model = Token
@@ -50,6 +51,7 @@ class LoginView(GenericAPIView):
             login(self.request, self.user)
 
     def get_response(self):
+        logger.debug("Exiting LoginView method in views.py in rest_auth package")
         return Response(
             self.response_serializer(self.token).data, status=status.HTTP_200_OK
         )
@@ -58,6 +60,7 @@ class LoginView(GenericAPIView):
         self.serializer = self.get_serializer(data=self.request.data)
         self.serializer.is_valid(raise_exception=True)
         self.login()
+        logger.debug("Exiting LoginView method in views.py in rest_auth package")
         return self.get_response()
 
 
@@ -69,6 +72,7 @@ class LogoutView(APIView):
 
     Accepts/Returns nothing.
     """
+    logger.debug("Entered LogoutView method in views.py in rest_auth package")
     permission_classes = (AllowAny,)
 
     def post(self, request):
@@ -78,7 +82,7 @@ class LogoutView(APIView):
             pass
 
         logout(request)
-
+        logger.debug("Exiting LogoutView method in views.py in rest_auth package")
         return Response({"success": "Successfully logged out."},
                         status=status.HTTP_200_OK)
 
@@ -94,10 +98,12 @@ class UserDetailsView(RetrieveUpdateAPIView):
         Optional: email, first_name, last_name and UserProfile fields
     Returns the updated UserProfile and/or User object.
     """
+    logger.debug("Entered UserDetailsView method in views.py in rest_auth package")
     serializer_class = UserDetailsSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):
+        logger.debug("Exiting UserDetailsView method in views.py in rest_auth package")
         return self.request.user
 
 
@@ -109,7 +115,7 @@ class PasswordResetView(GenericAPIView):
     Accepts the following POST parameters: email
     Returns the success/fail message.
     """
-
+    logger.debug("Entered PasswordResetView method in views.py in rest_auth package")
     serializer_class = PasswordResetSerializer
     permission_classes = (AllowAny,)
 
@@ -120,6 +126,7 @@ class PasswordResetView(GenericAPIView):
 
         serializer.save()
         # Return the success message with OK HTTP status
+        logger.debug("Exiting PasswordResetView method in views.py in rest_auth package")
         return Response(
             {"success": "Password reset e-mail has been sent."},
             status=status.HTTP_200_OK
@@ -135,7 +142,7 @@ class PasswordResetConfirmView(GenericAPIView):
     Accepts the following Django URL arguments: token, uid
     Returns the success/fail message.
     """
-
+    logger.debug("Entered PasswordResetConfirmView method in views.py in rest_auth package")
     serializer_class = PasswordResetConfirmSerializer
     permission_classes = (AllowAny,)
 
@@ -143,6 +150,7 @@ class PasswordResetConfirmView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        logger.debug("Exiting PasswordResetConfirmView method in views.py in rest_auth package")
         return Response({"success": "Password has been reset with the new password."})
 
 
@@ -154,7 +162,7 @@ class PasswordChangeView(GenericAPIView):
     Accepts the following POST parameters: new_password1, new_password2
     Returns the success/fail message.
     """
-
+    logger.debug("Entered PasswordChangeView method in views.py in rest_auth package")
     serializer_class = PasswordChangeSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -162,6 +170,7 @@ class PasswordChangeView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        logger.debug("Exiting PasswordChangeView method in views.py in rest_auth package")
         return Response({"success": "New password has been saved."})
 
 class LockUserView(GenericAPIView):
@@ -172,7 +181,7 @@ class LockUserView(GenericAPIView):
     Accepts the following POST parameters: new_password1, new_password2
     Returns the success/fail message.
     """
-
+    logger.debug("Entered LockUserView method in views.py in rest_auth package")
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'dashboard/user-view-main.html'
     serializer_class=LockUserSerializer
@@ -185,9 +194,11 @@ class LockUserView(GenericAPIView):
         user.save()
         #return Response({"success": "User has been locked."})
         queryset = User.objects.all()
+        logger.debug("Exiting LockUserView method in views.py in rest_auth package")
         return Response({'userlist': queryset})
 
 class UnlockUserView(GenericAPIView):
+    logger.debug("Entered UnlockUserView method in views.py in rest_auth package")
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'dashboard/user-view-main.html'
     serializer_class=UnlockUserSerializer
@@ -200,9 +211,11 @@ class UnlockUserView(GenericAPIView):
         user.save()
         #return Response({"success": "User has been unlocked."})
         queryset = User.objects.all()
+        logger.debug("Exiting UnlockUserView method in views.py in rest_auth package")
         return Response({'userlist': queryset})
 
 class DeactivateUserView(GenericAPIView):
+    logger.debug("Entered DeactivateUserView method in views.py in rest_auth package")
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'dashboard/user-view-main.html'
     serializer_class = DeactivateUserSerializer
@@ -215,15 +228,18 @@ class DeactivateUserView(GenericAPIView):
         user.save()
         #return Response({"success": "User has been deleted."})
         queryset = User.objects.filter(is_active=True)
+        logger.debug("Exiting DeactivateUserView method in views.py in rest_auth package")
         return Response({'userlist': queryset})
 
 class UserAPI(APIView):
+    logger.debug("Entered UserAPI method in views.py in rest_auth package")
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'dashboard/user-view-main.html'
 
     def get(self, request,format=None):
         queryset = User.objects.all()
         #usernames = [user.username for user in User.objects.all()]
+        logger.debug("Exiting UserAPI method in views.py in rest_auth package")
         return Response({'userlist': queryset})
         #return Response(usernames)
 
@@ -234,6 +250,7 @@ class UserAPI(APIView):
         email=request.POST.get('email')
         user=User.objects.update_or_create(username=username,first_name=firstname,last_name=lastname,email=email)
         queryset = User.objects.all()
+        logger.debug("Exiting UserAPI method in views.py in rest_auth package")
         return Response({'userlist': queryset})
 
     def delete(self,request):
@@ -241,14 +258,17 @@ class UserAPI(APIView):
         user = get_object_or_404(User,username=username)
         user.delete()
         queryset = User.objects.all()
+        logger.debug("Exiting UserAPI method in views.py in rest_auth package")
         return Response({'userlist': queryset})
 
 class GroupAPI(APIView):
+    logger.debug("Entered GroupAPI method in views.py in rest_auth package")
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'dashboard/groupview.html'
 
     def get(self, request,format=None):
         queryset = Group.objects.all()
+        logger.debug("Exiting GroupAPI method in views.py in rest_auth package")
         return Response({'grouplist': queryset})
 
     def post(self, request):
@@ -256,6 +276,7 @@ class GroupAPI(APIView):
         name = request.POST.get('groupname')
         group=Group.objects.update_or_create(id=id,name=name)
         queryset = Group.objects.all()
+        logger.debug("Exiting GroupAPI method in views.py in rest_auth package")
         return Response({'grouplist': queryset})
 
     def delete(self,request):
@@ -263,9 +284,11 @@ class GroupAPI(APIView):
         group = get_object_or_404(Group,name=name)
         group.delete()
         queryset = Group.objects.all()
+        logger.debug("Exiting GroupAPI method in views.py in rest_auth package")
         return Response({'grouplist': queryset})
 
 class DeactivateGroupView(APIView):
+    logger.debug("Entered DeactivateGroupView method in views.py in rest_auth package")
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'dashboard/groupview.html'
 
@@ -274,9 +297,11 @@ class DeactivateGroupView(APIView):
         print group
         group.delete()
         queryset = Group.objects.all()
+        logger.debug("Exiting DeactivateGroupView method in views.py in rest_auth package")
         return Response({'grouplist': queryset})
 
 class UserSearchAPI(APIView):
+    logger.debug("Entered UserSearchAPI method in views.py in rest_auth package")
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'dashboard/groupedit.html'
 
@@ -295,6 +320,7 @@ class UserSearchAPI(APIView):
                 data = {
                     'results': results,'grouplist':grouplist
                 }
+                logger.debug("Exiting UserSearchAPI method in views.py in rest_auth package")
                 return render_to_response( template, data,
                                        context_instance = RequestContext(request))
 
@@ -310,6 +336,7 @@ class UserSearchAPI(APIView):
         user = get_object_or_404(User,username=x)
         g.user_set.add(user)
         g.save()
+        logger.debug("Exiting UserSearchAPI method in views.py in rest_auth package")
         return Response({'id':id,'name':name,'userslist':userslist})
 
 def handlecsv(request):
@@ -328,7 +355,7 @@ def handlecsv(request):
            for row in reader:
             print header.index('username')
             user=User.objects.update_or_create(username=row[header.index('username')],first_name=row[header.index('firstname')],last_name=row[header.index('lastname')],email=row[header.index('email')],password=row[header.index('password')])
-         else:
+          else:
              print 'Canm here'
-
+    logger.debug("Exiting UserSearchAPI method in views.py in rest_auth package")
     return HttpResponseRedirect('/adminuserdetails/')
