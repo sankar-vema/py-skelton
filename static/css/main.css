@@ -159,9 +159,88 @@ code {
   box-shadow: 0 0 2px black;
 }
 
-/* Custom Style for Index page and footer*/
 /* class for making disabled links */
 ul.pagination li.disabled a{
   outline:0;
 }
-/* Custom Style for Index page and footer*/
+
+/** Overlay css**/
+.remove_button_css {
+  outline: none;
+  padding: 0px;
+  border: 0px;
+  box-sizing: none;
+  background-color: transparent;
+}
+
+.overlay-bg {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width: 100%;
+    cursor: pointer;
+    z-index: 1000; /* high z-index */
+    background: #000; /* fallback */
+    background: rgba(0,0,0,0.75);
+}
+.overlay-content {
+    display: none;
+    background: #fff;
+    padding: 1%;
+    width: 40%;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    margin: 0 0 0 -20%; /* add negative left margin for half the width to center the div */
+    cursor: default;
+    z-index: 10001;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.9);
+}
+
+#userdataform {
+    margin-left: 88px;
+}
+.form-header {
+    display: inline-block;
+    width: 98%;
+}
+.form-header h4{
+  float: left;
+}
+.form-header .remove{
+  float: right;
+}
+#userdataform p{
+    width: 100%;
+    padding: 6px 5px;
+    margin-bottom: 0px;
+}
+
+.label{
+    width: 25%;
+    font-weight: bold;
+    color: #000;
+    display: inline-block;
+    text-align: left;
+    font-size: 15px;
+}
+#userdataform .actionBtn{
+      margin-left: 235px;  
+}
+
+.error{
+  color: red;
+}
+
+label.error{
+    margin: 0 0 0 10px;
+    font-weight: normal;    
+}
+
+/*.addNewUser{
+  display:none;
+  visibility:hidden;
+}*/
