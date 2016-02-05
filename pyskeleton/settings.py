@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'rest_auth.registration',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    #'django-session-idle-timeout',
+    'django-session-idle-timeout',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -71,7 +71,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'axes.middleware.FailedLoginMiddleware'
-    #'django-session-idle-timeout.middleware.SessionIdleTimeout',
+    'django-session-idle-timeout.middleware.SessionIdleTimeout',
 )
 
 ROOT_URLCONF = 'pyskeleton.urls'
@@ -108,6 +108,45 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+#Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'pyskeleton_log',
+            'formatter': 'verbose'
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'rest_auth': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -145,7 +184,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 #AXES_LOGIN_FAILURE_LIMIT = 3
 #AXES_USE_USER_AGENT = True
-#SESSION_IDLE_TIMEOUT = 900
+SESSION_IDLE_TIMEOUT = 60
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
